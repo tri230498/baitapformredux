@@ -49,6 +49,51 @@ export const qlsvReducer = (state = stateDefault, action) => {
       state.arrSinhVien = arrSinhVienUpdate;
       return { ...state };
     }
+    case "XOA_TABLE": {
+      let { maSVClick } = action.payload;
+      let tableUpdate = [...state.arrSinhVien];
+      tableUpdate = tableUpdate.filter((sv) => sv.maSV !== maSVClick);
+
+      state.arrSinhVien = tableUpdate;
+      return { ...state };
+    }
+    case "EDIT_SV": {
+      let { maSVClick } = action.payload;
+      console.log(maSVClick);
+      let sinhVien = { ...state.sinhVien };
+      sinhVien = maSVClick;
+      state.sinhVien = sinhVien;
+      console.log(sinhVien);
+      return { ...state };
+    }
+    case "UPDATE_ARRPSV": {
+      let arrSinhVien = [...state.arrSinhVien];
+      arrSinhVien = arrSinhVien;
+      return { ...state };
+    }
+    case "SEARCH": {
+      var result = [];
+      let { value } = action;
+      let arrSinhVien = [...state.arrSinhVien];
+      if(!value) {
+        state.arrSinhVien = arrSinhVien;
+        
+      }else {
+        for (let key in arrSinhVien) {
+          var arrSinhVienList = arrSinhVien[key]
+          if (arrSinhVienList.maSV === value || arrSinhVienList.hoTen.includes(value)) {
+            result.push(arrSinhVienList);
+            state.arrSinhVien = result
+          }
+        }
+      }
+
+
+
+
+      return { ...state };
+    }
+
     default:
       return { ...state };
   }

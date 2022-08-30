@@ -11,11 +11,54 @@ class FormProduct extends Component {
     this.props.dispatch(action);
   };
 
+  updateProduct = (sinVienUpdate) => {
+    let prodUpdate = this.props.qlsvReducer.arrSinhVien.find(
+      (sv) => sv.maSV == sinVienUpdate.maSV
+    );
+    if (prodUpdate) {
+      for (let key in prodUpdate) {
+        prodUpdate[key] = sinVienUpdate[key];
+      }
+    }
+
+    const action = {
+      type: "UPDATE_ARRPSV",
+    };
+    this.props.dispatch(action);
+
+    console.log(sinVienUpdate);
+  };
+
+  // Tìm kiếm tuyến tinh Sinh Viên
+
+  // findSinhVien = () => {
+  //   // debugger
+  //   var results = [];
+  //   var keyword = document.getElementById("txtSearch").value;
+
+  //   for (let key in this.props.qlsvReducer.arrSinhVien) {
+  //     var currentSinhVien = this.props.qlsvReducer.arrSinhVien[key];
+  //     if (
+  //       currentSinhVien.maSV === keyword ||
+  //       currentSinhVien.hoTen.includes(keyword)
+  //     ) {
+  //       results.push(currentSinhVien);
+        
+  //     }
+  //   }
+  // };
+
+
+
+
+
+
+
   render() {
     let { sinhVien } = this.props.qlsvReducer;
-    console.log(sinhVien);
+    // console.log(sinhVien);
     return (
-      <form className="form" onSubmit={this.handleSubmit}>
+      <form className="form">
         <div className="card">
           <div
             className="card-header text-white fs-4"
@@ -112,9 +155,55 @@ class FormProduct extends Component {
                 </div>
               </div>
             </div>
-            <button className="btn btn-success mx-2 mt-3">
+            <button
+              className="btn btn-success mx-2 mt-3"
+              typeof="submit"
+              onClick={this.handleSubmit}
+            >
               Thêm sinh viên
             </button>
+            <button
+              typeof="button"
+              className="btn btn-success mx-2 mt-3"
+              onClick={(e) => {
+                e.preventDefault();
+                {
+                  this.updateProduct(sinhVien);
+                }
+              }}
+            >
+              Cập nhật
+            </button>
+            {/* Search Sinh Viên */}
+            <div className="row">
+              <div className="col-4 d-flex" style={{ position: "relative" }}>
+                <input
+                  type="text"
+                  name=""
+                  id="txtSearch"
+                  className="form-control my-2"
+                  placeholder="Tìm kiếm Sinh Viên..."
+                  onChange={(e) => {
+                    const action = {
+                      type: "SEARCH",
+                      value : e.target.value,
+                    }
+                    this.props.dispatch(action)
+                  }}
+                />
+                <div
+                  className="icon"
+                  style={{
+                    position: "absolute",
+                    right: 20,
+                    bottom: 10,
+                    fontSize: 20,
+                  }}
+                >
+                  <ion-icon name="search-outline"></ion-icon>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </form>

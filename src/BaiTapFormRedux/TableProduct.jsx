@@ -28,16 +28,44 @@ class TableProduct extends Component {
                 </td>
             </tr> */}
           {arrSinhVien.map((sinhVien, index) => {
-            return <tr key={index}>
-            <td>{sinhVien.maSV}</td>
-            <td>{sinhVien.hoTen}</td>
-            <td>{sinhVien.sodienthoai}</td>
-            <td>{sinhVien.email}</td>
-            <td>
-                <button className='btn btn-danger mx-2'>Delete</button>
-                <button className='btn btn-primary mx-2'>Edit</button>
-            </td>
-        </tr>
+            return (
+              <tr key={index}>
+                <td>{sinhVien.maSV}</td>
+                <td>{sinhVien.hoTen}</td>
+                <td>{sinhVien.sodienthoai}</td>
+                <td>{sinhVien.email}</td>
+                <td>
+                  <button
+                    className="btn btn-danger mx-2"
+                    onClick={() => {
+                      const action = {
+                        type: "XOA_TABLE",
+                        payload: {
+                          maSVClick: sinhVien.maSV,
+                        },
+                      };
+                      this.props.dispatch(action);
+                    }}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="btn btn-primary mx-2"
+                    onClick={() => {
+                      const action = {
+                        type: "EDIT_SV",
+                        payload: {
+                          maSVClick: sinhVien
+                        },
+                      };
+                      this.props.dispatch(action);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            );
           })}
         </tbody>
       </table>
